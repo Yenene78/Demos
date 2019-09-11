@@ -350,6 +350,5 @@ ol.linenums {
   margin-left: 20px;
 }
 input{
-  font-size: 25px;
-  margin-left: 15px;
+  font-size: 25px!important;
 }
