@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title>Elina's Playground</title>
+	<link rel="stylesheet" href="static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/css/flat-ui.min.css">
+	<link rel="stylesheet" href="static/css/flat-ui.css">
+	<link rel="stylesheet" href="static/css/demo.css">
+	<script type="text/javascript" src="static/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="static/js/flat-ui.min.js"></script>
+	<script type="text/javascript" src="static/js/flat-ui.js"></script>
+	<script type="text/javascript">
+	function ping(){
+		$.ajax({
+			type: 'GET',
+			url: "ping?q=" + document.getElementById("input0").value,
+			success: function(data){
+				console.log("Success");
+				document.getElementById("result0").innerHTML = data;
+			},
+			error: function(xhr, type) {
+				console.log("Error");
+				console.log(xhr);
+			}
+		});
+	}
+</script>
+</head>
+<body>
+	<div class="container">
+		<h1 class="demo-headline"><div class="logo">API Playground</div></h1>
+		<h3 class="demo-pannel-title">Bing Local Business Search</h3>
+		<h3>
+			<div class="row demo-row">
+				<input id="input0" class="col-6" type="text">
+				<div class="col-1"></div>
+				<button id="btnCheck" class="btn btn-primary btn-hg btn-block col-4" onclick="ping()">Check</button>
+			</div>
+		</h3>
+		<h3>
+			<textarea id="result0" class="form-control" placeholder="Waiting responses..." cols="100" rows="10" style="font-size:20px"></textarea>
+		</h3>
+	</div>
+</body>
+</html>

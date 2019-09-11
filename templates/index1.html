@@ -1,0 +1,75 @@
+<html>
+<head>
+	<title>Bing Local Business Search</title>
+	<link rel="stylesheet" href="static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/css/flat-ui.min.css">
+	<link rel="stylesheet" href="static/css/flat-ui.css">
+	<link rel="stylesheet" href="static/css/demo.css">
+	<link rel="stylesheet" href="static/css/default.css">
+	<link rel="stylesheet" href="static/css/documentation.css">
+	<link rel="stylesheet" href="static/css/jquery.toolbar.css">
+	<link rel="stylesheet" href="static/css/prettify.css">
+	<link rel="stylesheet" href="static/font-awesome-4.3.0/css/font-awesome.min.css">
+	<script type="text/javascript" src="static/js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="static/js/flat-ui.min.js"></script>
+	<script type="text/javascript" src="static/js/flat-ui.js"></script>
+	<script type="text/javascript" src="static/js/jquery.toolbar.js"></script>
+</head>
+<script type="text/javascript">
+	function ping(){
+		$.ajax({
+			type: 'GET',
+			url: "ping",
+			success: function(data){
+				console.log(data);
+			},
+			error: function(xhr, type) {
+				console.log("Error");
+				console.log(xhr);
+			}
+		});
+	}
+</script>
+<body>
+	<div class="container tooltip-container">
+		<h1 class="demo-headline"><div class="logo">API Playground</div></h1>
+		<h3 class="demo-pannel-title">Simple Test</h3>
+		<h3>
+			<section class="left">
+				<div class="btn-toolbar btn-toolbar-primary pull-left" data-toolbar="common-options" data-toolbar-style="primary" data-toolbar-animation="bounce" >
+					<button id="btnCheck" class="btn btn-primary btn-hg btn-block" onclick="ping()">Check</button>
+				</div>
+				<div class="clear"></div>
+			</section>
+		</h3>
+		<h3>
+			<textarea id="result" class="form-control" placeholder="Waiting responses..." cols="100" rows="5" style="font-size:20px"></textarea>
+		</h3>
+<!-- 		<h3 class="demo-pannel-title">Upload</h3>
+		<h3>
+			<form id="uploadFile" class="row demo-row" action="" method="post" enctype="multipart/form-data">
+			    <input type="file" id="hiddenFile" name="file" class="col">
+			    <div class="col"><input type="button" class="btn btn-primary btn-hg btn-block" onclick="" value="Upload"></div>
+			</form>
+		</h3>
+		<h3>
+			<textarea id="result" class="form-control" placeholder="Waiting responses..." cols="100" rows="50" style="font-size:20px"></textarea>
+		</h3> -->
+		<div id="transport-options" class="toolbar-icons hidden">
+			<a href="#"><div class="toolbar-item">Check Connection</div></a>
+			<a href="#"><i class="fa fa-car"></i></a>
+			<a href="#"><i class="fa fa-bicycle"></i></a>
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$('div[data-toolbar="common-options"]').toolbar({
+				content: '#transport-options',
+				position: 'right',
+			});
+		});
+	</script>
+</body>
+</html>
