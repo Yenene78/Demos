@@ -13,7 +13,7 @@ def helloWorld():
 @app.route("/ping", methods=["GET", "POST"])
 def ping():
 	headers = {'Ocp-Apim-Subscription-Key': API_KEY}
-	params = {'q': request.args.get("q"), 'mkt': 'en-us'}
+	params = {'q': request.args.get("q"), 'mkt': 'en-us', 'localCircularView':'47.6421,-122.13715,5000'}
 	ret = requests.get(url=BASE_URL, headers=headers, params=params)
 	return json.dumps(ret.json(), indent=4)
 
