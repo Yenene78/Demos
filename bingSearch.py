@@ -9,7 +9,7 @@ BASE_URL = "https://api.cognitive.microsoft.com/bing/v7.0/localbusinesses/search
 
 @app.route("/", methods=["GET", "POST"])
 def helloWorld():
-	return render_template("index1.html")
+	return render_template("index.html")
 @app.route("/ping", methods=["GET", "POST"])
 def ping():
 	headers = {'Ocp-Apim-Subscription-Key': API_KEY}
