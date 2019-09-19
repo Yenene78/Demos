@@ -1,4 +1,5 @@
 import json
+import random
 import requests
 from flask import Flask, render_template, request
 
@@ -13,9 +14,10 @@ def helloWorld():
 @app.route("/ping", methods=["GET", "POST"])
 def ping():
 	headers = {'Ocp-Apim-Subscription-Key': API_KEY}
-	params = {'q': qa_to_answer(request.args.get("q")), 'mkt': 'en-us', 'localCircularView':'47.6421, -122.13715, 5000'}
+	query = qa_to_answer(request.args.get("q"))
+	params = {'q': query, 'mkt': 'en-us', 'localCircularView':'47.6421, -122.13715, 5000'}
 	ret = requests.get(url=BASE_URL, headers=headers, params=params)
-	retList = json_to_obj(ret.text)
+	retList = json_to_obj(ret.text, query)
 	retDic = {}
 	for i in range(len(retList)):
 		retDic[i] = retList[i]
@@ -36,7 +38,24 @@ def qa_to_answer(input_string):
     answer = my_dict['answers'][0]['answer']
     return answer
 
-def json_to_obj(dict):
+def genFakeData(type):
+	retDic = {}
+	amount = round(random.random()*5)
+	fakeMeal = ["Hamburger", "Salade", "French Fries", "Coffee", "Coco Cola"]
+	fakeHard = ["H4 P43T", "My Bulb", "Cand E-12", "Wedge", "R-7"]
+	for i in range(amount):
+		if(type == "Restaurant"):
+			coin = round(random.random()*(len(fakeMeal)-1))
+			cur = fakeMeal[coin]
+			fakeMeal.remove(cur)
+		elif(type == "Hardware store"):
+			coin = round(random.random()*(len(fakeHard)-1))
+			cur = fakeHard[coin]
+			fakeHard.remove(cur)
+		retDic[cur] = round(random.random()*10+1)
+	return retDic
+
+def json_to_obj(dict, query):
     my_dict = json.loads(dict)
     obj_list,obj_dict =[],{}
     values = my_dict['places']['value']
@@ -45,7 +64,7 @@ def json_to_obj(dict):
         curName = value["name"]
         curGeo = value["geo"]
         curAddress = value["address"]
-        obj_list.append({'name':curName, 'geo':curGeo, 'address': curAddress})
+        obj_list.append({'type': query, 'name':curName, 'geo':curGeo, 'address': curAddress, 'inventory': genFakeData(query)})
     return obj_list
 
 if(__name__ == "__main__"):
