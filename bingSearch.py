@@ -4,7 +4,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-API_KEY = "1d747ded252e468a8fff93c3fda96a71"
+API_KEY = "6896a2e7a0d7488fb3c6828a934133a5"
 BASE_URL = "https://api.cognitive.microsoft.com/bing/v7.0/localbusinesses/search"
 
 @app.route("/", methods=["GET", "POST"])
