@@ -46,12 +46,9 @@
       <section class="menu-section">
         <h3 id="goodTitle" class="menu-section-title">No selected Business</h3>
         <ul id="goodList" class="menu-section-list">
-         <!--  <li><a href="https://github.com/mango/slideout#installation" target="_blank">Bing Local Business Search</a></li>
-          <li><a href="https://github.com/mango/slideout#usage" target="_blank">...</a></li>
-          <li><a href="https://github.com/mango/slideout#api" target="_blank">...</a></li>
-          <li><a href="https://github.com/mango/slideout#npm-scripts" target="_blank">...</a></li> -->
         </ul>
       </section>
+      <footer><div style="margin-top: 90vh; margin-left: 20vw"><img src="static/imgs/logo.png" alt="" width="100px"></div></footer>
     </nav>
 	<main id="panel" class="panel" style="height: 0px">
 		<header class="panel-header"></header>
@@ -186,14 +183,14 @@
 		                                </div>
 		                                <h4 class="feature-title m-0">Assistant</h4>
 									</div>
-	                                <p id="askSuggest" class="text-sm mb-0">Have you found that you want?</p>
+	                                <p id="askSuggest" class="text-sm mb-0" style="margin-bottom: 1vh">Have you found that you want?</p>
 	                                <button id="fake0" class="button button-primary" onclick="showThanks()">Yes</button>
 	                                <a id="fake1" class="button button-primary" href="https://cn.bing.com/">No</a>
 	                            </div>
 	                        </div>
 							<div class="feature">
 	                            <div class="feature-inner">
-									<div class="feature-header mb-32">
+									<div class="feature-header mb-16">
 										<div class="feature-icon mr-16">
 											<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 											    <defs>
@@ -221,7 +218,7 @@
 										</div>
 		                                <h4 class="feature-title m-0">Technique Support</h4>
 									</div>
-									<p>Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.</p>
+									<p>A demo website for temporary usage in the Azure Hackathon with SAP. If you wanna reach me: <a style="margin-left:0.5vw; cursor: pointer">somebody@sap.com</a></p>
 	                            </div>
 	                        </div>
 						</div>
@@ -312,8 +309,8 @@
 	<script type="text/javascript">
 		var map;
 		function addPushpin(data){
-			map = loadMapScenario();
-			setMyPoint();
+			// map = loadMapScenario();
+			// setMyPoint();
 			var infobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(data[0]["geo"]["latitude"], data[0]["geo"]["longitude"]), {title: data[0]["name"], description: '<b>Stock: </b>2', visible:false, autoAlignment: true});
 			infobox.setMap(map);
 			map.setView({
@@ -353,7 +350,11 @@
 			                	var li = document.createElement("li");
 			                	li.style += "margin-left: 5px; margin-bottom: 25px";
 			                	li.innerHTML = "<b>" + itemList[j]  +"</b>";
-			                	li.innerHTML += "<img src='static/imgs/" + (j+1).toString() + ".jpg' style='width:150px'/>"
+			                	if(args.target.metadata.goodType == "Restaurant"){
+			                		li.innerHTML += "<img src='static/imgs/meal" + (j).toString() + ".jpg' style='width:150px'/>";
+			                	}else{
+			                		li.innerHTML += "<img src='static/imgs/" + (j+1).toString() + ".jpg' style='width:150px'/>";
+			                	}
 			                	li.innerHTML += "Current Amount: <label style='margin-left:20px;'><font color='#55b4d4'>";
 			                	li.innerHTML += inventory[itemList[j]] + "</font></label>";
 			                	li.innerHTML += "<br>Price: " + Math.floor(Math.random()*300).toString() + "<br>";
