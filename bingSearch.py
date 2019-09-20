@@ -41,8 +41,11 @@ def qa_to_answer(input_string):
 def genFakeData(type):
 	retDic = {}
 	amount = round(random.random()*5)
+	if(amount == 0):
+		amount = 1
 	fakeMeal = ["Hamburger", "Salade", "French Fries", "Coffee", "Coco Cola"]
 	fakeHard = ["H4 P43T", "My Bulb", "Cand E-12", "Wedge", "R-7"]
+	curSum = 0
 	for i in range(amount):
 		if(type == "Restaurant"):
 			coin = round(random.random()*(len(fakeMeal)-1))
@@ -52,8 +55,10 @@ def genFakeData(type):
 			coin = round(random.random()*(len(fakeHard)-1))
 			cur = fakeHard[coin]
 			fakeHard.remove(cur)
-		retDic[cur] = round(random.random()*10+1)
-	return retDic
+		tmp = round(random.random()*10+1)
+		curSum += tmp
+		retDic[cur] = tmp
+	return retDic, curSum
 
 def json_to_obj(dict, query):
     my_dict = json.loads(dict)
@@ -64,7 +69,8 @@ def json_to_obj(dict, query):
         curName = value["name"]
         curGeo = value["geo"]
         curAddress = value["address"]
-        obj_list.append({'type': query, 'name':curName, 'geo':curGeo, 'address': curAddress, 'inventory': genFakeData(query)})
+        curInv, curSum = genFakeData(query)
+        obj_list.append({'type': query, 'name':curName, 'geo':curGeo, 'address': curAddress, 'inventory': curInv, 'stock': curSum})
     return obj_list
 
 if(__name__ == "__main__"):

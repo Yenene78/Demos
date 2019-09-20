@@ -304,6 +304,7 @@
 	<script type="text/javascript">
 		var map;
 		function addPushpin(data){
+			map = loadMapScenario();
 			var infobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(data[0]["geo"]["latitude"], data[0]["geo"]["longitude"]), {title: data[0]["name"], description: '<b>Stock: </b>2', visible:false, autoAlignment: true});
 			infobox.setMap(map);
 			map.setView({
@@ -312,13 +313,13 @@
 			Microsoft.Maps.loadModule('Microsoft.Maps.WellKnownText', function () {
 				for(var i=0; i<Object.keys(data).length; i++){
 					var cur = "POINT(" + data[i]["geo"]["longitude"].toString() + " " + data[i]["geo"]["latitude"].toString() + ")";
-					var curColor = new Array("red", "grey")[Math.floor(Math.random()*2)];
+					var curColor = new Array("red", "grey", "purple")[Math.floor(Math.random()*3)];
 		            var pushpin = Microsoft.Maps.WellKnownText.read(cur);
 		            pushpin.setOptions({color: curColor});
 		            pushpin.metadata = {
 				        title: data[i]["name"],
 				        goodType: data[i]["type"],
-				        stock: Math.floor((Math.random()*10)+1).toString(),
+				        stock: data[i]["stock"],
 				        address: data[i]["address"],
 				        description: '<b>Stock: </b>',
 				        inventory: data[i]["inventory"]
@@ -341,10 +342,28 @@
 			                goodList.innerHTML = "";
 			                for(var j=0; j<itemList.length; j++){
 			                	var li = document.createElement("li");
-			                	li.innerHTML = "<b>" + itemList[j]  +"</b><label style='margin-left:20px;'>";
-			                	li.innerHTML += inventory[itemList[j]] + "</label>";
+			                	li.style += "margin-left: 5px";
+			                	li.innerHTML = "<b>" + itemList[j]  +"</b>";
+			                	li.innerHTML += "<img src='static/imgs/" + (j+1).toString() + ".jpg' style='width:150px'/>"
+			                	li.innerHTML += "Current Amount: <label style='margin-left:20px;'><font color='#55b4d4'>";
+			                	li.innerHTML += inventory[itemList[j]] + "</font></label>";
+			                	li.innerHTML += "<br>Price: " + Math.floor(Math.random()*300).toString() + "<br>";
 			                	goodList.appendChild(li);
 			                }
+			            });
+				    }else if(curColor == "purple"){
+				    	var time = "00:" + Math.floor(Math.random()*6).toString() + Math.floor(Math.random()*10).toString();
+				    	pushpin.metadata.description = "Opening in: " + time;
+				    	Microsoft.Maps.Events.addHandler(pushpin, 'click', function (args) {
+			                infobox.setOptions({
+								location: args.target.getLocation(),
+								title: args.target.metadata.title,
+	            				description: args.target.metadata.description,
+			                	visible: true
+			                });
+			                document.getElementById("printoutPanel").innerHTML = args.target.metadata.title + "<br>Address: " + args.target.metadata.address["streetAddress"] + "<br>Postal: " + args.target.metadata.address["postalCode"];
+			            	var goodList = document.getElementById("goodList");
+			            	goodList.innerHTML = "";
 			            });
 				    }
 		            map.entities.push(pushpin);
@@ -356,6 +375,7 @@
 	            center: new Microsoft.Maps.Location(47.6421, -122.13715),
 	            zoom: 15 });
 	        var sdsDataSourceUrl = 'https://spatial.virtualearth.net/REST/v1/data/f22876ec257b474b82fe2ffcb8393150/NavteqNA/NavteqPOIs';
+	        return map;
 	    }
 	</script>
     <script type='text/javascript' src='https://cn.bing.com/api/maps/mapcontrol?key=AsUBIMfSFX4HntgkuHCFVeS3-5I4ltkPc1KNFalzR_aNU86S76k0g14goOIKx64T&callback=loadMapScenario' async defer></script>
