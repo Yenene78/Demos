@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta id="meta" name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <meta id="meta" name="viewport" content="width=device-width; initial-scale=1; minimum-scale=1; maximum-scale=1; user-scalable=0;">
     <title>Fish Pond</title>
     <link href="https://fonts.googleapis.com/css?family=Heebo:400,400i,500,700|Titillium+Web:600" rel="stylesheet">
     <link rel="stylesheet" href="static/css/slideout.css">
@@ -28,6 +28,13 @@
 					btn.disabled = false;
 				}
 			});
+		}
+		function showThanks(){
+			var btn0 = document.getElementById("fake0");
+			var btn1 = document.getElementById("fake1");
+			btn0.style["display"] = "none";
+			btn1.style["display"] = "none";
+			document.getElementById("askSuggest").innerHTML += "<br><font color='#626fff'>Thanks for appreciation! XD</font>";
 		}
 	</script>
 </head>
@@ -68,7 +75,9 @@
                     <div class="hero-inner">
 						<div class="hero-copy">
 	                        <h1 class="hero-title mt-0 is-revealing">Eyes 4U</h1>
-	                        <p class="hero-paragraph is-revealing">Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.</p>
+	                        <p class="hero-paragraph is-revealing">Not Only search for what but also Why.
+							We are the <b>Eyes for you</b> to search. Input with your nature language <b>:)</b>
+							</p>
 							<div class="hero-form field field-grouped is-revealing">
 	                            <div class="control control-expanded">
 	                                <input id="input0" class="input" type="email" name="email" placeholder="Ask me please :)">
@@ -177,10 +186,9 @@
 		                                </div>
 		                                <h4 class="feature-title m-0">Assistant</h4>
 									</div>
-	                                <p class="text-sm mb-0">Have you found that you want?</p>
-	                                <button id="fake0" class="button button-primary">Yes</button>
-	                                <button id="fake1" class="button button-primary">No</button>
-
+	                                <p id="askSuggest" class="text-sm mb-0">Have you found that you want?</p>
+	                                <button id="fake0" class="button button-primary" onclick="showThanks()">Yes</button>
+	                                <a id="fake1" class="button button-primary" href="https://cn.bing.com/">No</a>
 	                            </div>
 	                        </div>
 							<div class="feature">
@@ -211,7 +219,7 @@
 											    </g>
 											</svg>
 										</div>
-		                                <h4 class="feature-title m-0">Something here</h4>
+		                                <h4 class="feature-title m-0">Technique Support</h4>
 									</div>
 									<p>Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.</p>
 	                            </div>
@@ -305,6 +313,7 @@
 		var map;
 		function addPushpin(data){
 			map = loadMapScenario();
+			setMyPoint();
 			var infobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(data[0]["geo"]["latitude"], data[0]["geo"]["longitude"]), {title: data[0]["name"], description: '<b>Stock: </b>2', visible:false, autoAlignment: true});
 			infobox.setMap(map);
 			map.setView({
@@ -370,11 +379,17 @@
 				}
 			});
 		}
+		function setMyPoint() {
+			 var pushpin = new Microsoft.Maps.Pushpin( new Microsoft.Maps.Location (47.6421, -122.13715), {icon: 'https://www.bingmapsportal.com/Content/images/poi_custom.png',
+			    anchor: new Microsoft.Maps.Point(100, 39), text: 'You', textOffset: new Microsoft.Maps.Point(0, 6)});
+			 map.entities.push(pushpin);
+		}
 		function loadMapScenario() {
 	        map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
 	            center: new Microsoft.Maps.Location(47.6421, -122.13715),
 	            zoom: 15 });
 	        var sdsDataSourceUrl = 'https://spatial.virtualearth.net/REST/v1/data/f22876ec257b474b82fe2ffcb8393150/NavteqNA/NavteqPOIs';
+	        setMyPoint();
 	        return map;
 	    }
 	</script>

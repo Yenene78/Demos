@@ -12,6 +12,9 @@ body,
   background-color: #fff;
 }
 */
+html{
+  zoom: 0.75;
+}
 li{
   padding-left: 20px;
   font-size: 15px;
